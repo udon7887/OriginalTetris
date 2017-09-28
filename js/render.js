@@ -56,14 +56,20 @@ function drawMenu(){
                         ctx.fillText("R：強制ゲームオーバー",0,60+H/2);
             break;
         case State.GAME:
-            var txt = "Score:" + score;
-            ctx.fillText(txt,W-100,20);
+            drawScore();
             break;
         case State.GAMEOVER:
-            ctx.fillText("Game Over",0,H/2);
-            ctx.fillText("Press Space key to continue.",0,20+H/2);
-                       var txt = "Score:" + score;
-            ctx.fillText(txt,W-100,20);
+            ctx.fillText("ゲームオーバー",0,H/2);
+            ctx.fillText("スペース押してcontinue",0,20+H/2);
+            drawScore();
             break;
     }
+}
+function drawScore(){
+        ctx.font = "18px 'ＭＳ Ｐゴシック'";
+    ctx.fillStyle = 'black';
+                var scoretxt = "Score:" + score;
+            ctx.fillText(scoretxt,W-100,20);
+            var leveltxt = "Level " + level;
+            ctx.fillText(leveltxt,W-100,40);
 }

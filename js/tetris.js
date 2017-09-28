@@ -9,6 +9,7 @@ var currentX,currentY;//操作ブロックの位置
 
 var intervalCount = 0;
 var score = 0;
+var level = 1;
 
 //画面の状態
 var State ={
@@ -22,6 +23,8 @@ var state;
 var sound_rotate;
 var sound_clear = [];
 var sound_put;
+var sound_start;
+var sound_gameover;
 
 //ブロックのパターン
 var shapes = [
@@ -56,6 +59,9 @@ function loadAsset(){
         sound_clear[i] = new Audio("audio/ohyes.mp3");
     }
     sound_put = new Audio("audio/swit017.wav");
+    sound_start = new Audio("audio/success.wav");
+    sound_gameover = new Audio("audio/ng.wav");
+    
     
 }
 
@@ -73,6 +79,7 @@ function newGame(){
 }
 //ゲームスタート
 function gameStart(){
+    sound_start.play();
     newShape();
     lose = false;
     interval = setInterval(newTick,50); 
@@ -80,6 +87,7 @@ function gameStart(){
 //ゲームオーバー
 function gameOver(){
     state = State.GAMEOVER;
+    sound_gameover.play();
     newGame();
 }
 
@@ -126,18 +134,23 @@ function newTick(){
     intervalCount++;
     
     if(score<500){
+        level = 1;
         if(intervalCount>=8) tick(); 
     }
-    else if(score < 2000){
+    else if(score < 1500){
+        level = 2;
         if(intervalCount>=6) tick(); 
     }
     else if(score < 4000){
+        level = 3;
         if(intervalCount>=4) tick(); 
     }
     else if(score < 8000){
+        level = 4;
         if(intervalCount>=2) tick(); 
     }
     else{
+        level = 5;
         if(intervalCount>=1) tick(); 
     }
     

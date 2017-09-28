@@ -1,4 +1,5 @@
 //http://coderecipe.jp/recipe/iHjJBJx9Si/
+//https://udon7887.github.io/OriginalTetris/
 var COLS = 10, ROWS = 20; // 横が10マス、縦が20マス
 var board = []; // 盤面の情報
 var lose; //ゲームオーバ判定
@@ -19,7 +20,7 @@ var state;
 
 //効果音
 var sound_rotate;
-var sound_clear;
+var sound_clear = [];
 var sound_put;
 
 //ブロックのパターン
@@ -51,7 +52,9 @@ var colors = ['cyan','orange','blue','yellow','red','green','purple'];
 function loadAsset(){
     //audio系
     sound_rotate = new Audio("audio/swit008.wav");
-    sound_clear = new Audio("audio/ohyes.mp3");
+    for(var i = 0;i<3;i++){
+        sound_clear[i] = new Audio("audio/ohyes.mp3");
+    }
     sound_put = new Audio("audio/swit017.wav");
     
 }
@@ -122,7 +125,7 @@ function newTick(){
     
     intervalCount++;
     
-    if(score<1000){
+    if(score<500){
         if(intervalCount>=8) tick(); 
     }
     else if(score < 2000){
@@ -215,8 +218,12 @@ function clearLines(){
         if(rowFilled){
             //document.getElementById('clearsound1').play(); //消滅サウンド
             count++;
-            sound_clear.pause();
-            sound_clear.play();
+            for(var i=0;i<3;i++){
+                if(sound_clear[i].paused == true){
+                    sound_clear[i].play();
+                    break;
+                }
+            }
             //ブロックを落としていく
             for(var yy=y;yy>0; --yy){
                 for(var x = 0; x<COLS;++x){
